@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="icon" href="./assets/img/favicon.ico" type="image/ico">
+    <title>home</title>
+    <link href="./assets/script/fontawesome-free-5.13.1-web/css/all.css" rel="stylesheet"> <!--load all styles -->
+    <link rel="stylesheet" type="text/css" href="./assets/css/simplemde.min.css"/>
+    <script type="text/javascript"  src="./assets/script/simplemde.min.js"></script>
+    <!--
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+      extensions: ["tex2jax.js"],
+	  extensions: ["toMathML.js"],
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+      },
+      "HTML-CSS": { availableFonts: ["TeX"] }
+      });
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_CHTML"></script>
+    </script>
+    <script>
+      var math = null;                // the element jax for the math output.
+      //
+      //  Get the element jax when MathJax has produced it.
+      //
+      MathJax.Hub.queue.Push(function () {
+        math = MathJax.Hub.getAllJax("MathOutput")[0];
+      });
+      //
+      //  The onchange event handler that typesets the
+      //  math entered by the user
+      //
+      function UpdateMath(TeX) {
+        MathJax.Hub.queue.Push(["Text",math,TeX]);
+        localStorage.setItem('LaTeX', TeX);
+      };
+    </script>
+    -->
+    <script>
+    //open external links in a new window
+    function external_new_window() {
+      for(var c = document.getElementsByTagName("a"), a = 0;a < c.length;a++) {
+        var b = c[a];
+        if(b.getAttribute("href") && b.hostname !== location.hostname) {
+            b.target = "_blank";
+            b.rel = "noopener";
+        }
+      }
+    }
+    //open PDF links in a new window
+    function pdf_new_window ()
+    {
+      if (!document.getElementsByTagName) return false;
+        var links = document.getElementsByTagName("a");
+      for (var eleLink=0; eleLink < links.length; eleLink ++) {
+        if ((links[eleLink].href.indexOf('.pdf') !== -1)||(links[eleLink].href.indexOf('.doc') !== -1)||(links[eleLink].href.indexOf('.docx') !== -1)) {
+          links[eleLink].onclick =
+            function() {
+              window.open(this.href);
+              return false;
+            }
+        }
+      }
+    }
+    function setSaveAccessKey() {
+      var node = document.getElementsByClassName("fa fa-eye no-disable no-mobile");
+      alert(node[0].class);
+      node.accesskey = "s";
+    };
+    pdf_new_window();
+    external_new_window();
+    </script>
+    <style>
+      .CodeMirror 
+      {
+        height: 80vh;
+      }
+    </style>
+    <style>
+      h4
+      {
+        margin-top:10px;
+        margin-bottom:2px;
+      }
+	
+      h4 small
+      {
+        font-style:italic;
+      }
+      pre
+      {
+        overflow:auto;
+        word-wrap:normal;
+        white-space:pre;
+      }
+      .hiddenClass
+      {
+        display:none;
+      }
+    </style>
+    <script>
+      // Function to download data to a file
+      function download(data, filename, type) {
+        var file = new Blob([data], {type: type});
+        if (window.navigator.msSaveOrOpenBlob) // IE10+
+          window.navigator.msSaveOrOpenBlob(file, filename);
+        else { // Others
+          var a = document.createElement("a"),
+                  url = URL.createObjectURL(file);
+          a.href = url;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);  
+          }, 0); 
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div style="position:absolute;
+                width: 100vw;
+                top: 0pt;
+                left: 0pt;
+                right: 0pt;
+                height: 5pt;
+                z-index: 5;
+                background-color: #0f4c81;"
+         onclick="download('Hi there', 'hi.txt', 'txt')"></div>
+    <div style="position:absolute;
+                top:3em;
+                left:3vw;
+                margin:auto;
+                width:50vw;
+                height:80vh;">
+      <textarea id="textarea1"></textarea>
+    </div>
+    <div id="helpMarkDown"
+         style="position:absolute;
+                top: 2em;
+                left: 55vw;
+                overflow: auto;
+                height:95vh;
+                width:30vw;
+                background-color: #FFFFFF;
+                z-index: 10;
+                padding-left:10pt;
+                border-radius: 25px;
+                box-shadow:0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);"
+         class="hiddenClass">
+      <div class="container-fluid">
+      <div class="row" style="max-width:35vw; margin:auto;">
+      <div class="col-xs-12">
+      <style>
+        pre
+        {
+          overflow:hidden;
+        }
+      </style>
+      <h1 style="text-align:center;">Markdown Guide</h1>
+      <h4>Emphasis</h4>
+      <pre>**<strong>bold</strong>**
+*<em>italics</em>*
+~~<strike>strikethrough</strike>~~</pre>
+        <h4>Headers</h4>
+        <pre># Big header
+## Medium header
+### Small header
+#### Tiny header</pre>
+        <h4>Lists</h4>
+        <pre>* Generic list item
+* Generic list item
+
+1. Numbered list item
+2. Numbered list item</pre>
+        <h4>Links</h4>
+        <pre>[Text to display](http://www.example.com)</pre>
+        <h4>Quotes</h4>
+        <pre>&gt; This is a quote.
+&gt; It can span multiple lines!</pre>
+        <h4>Images</h4>
+        <pre>![](http://www.example.com/image.jpg)</pre>
+        <h4>Tables</h4>
+        <pre>| Column 1 | Column 2 | Column 3 |
+| -------- | -------- | -------- |
+| John     | Doe      | Male     |</pre>
+       <h4>Displaying code</h4>
+       <pre>`int x = 314;`
+
+```
+def successor(n):
+  return n+1
+```</pre>
+       </div>
+       </div>
+      </div>
+    </div>
+    <script>
+      var simplemde = new SimpleMDE({
+        minHeight: "500px",
+        autoDownloadFontAwesome: false,
+        autosave: {
+	  enabled: true,
+	  uniqueId: "homePageNotes",
+	  delay: 10,
+	},
+        toolbar: 
+        [{
+           name: "bold",
+           action: SimpleMDE.toggleBold,
+           className: "fa fa-bold",
+           title: "Bold (Ctrl+B)",
+         },
+         {
+           name: "italic",
+           action: SimpleMDE.toggleItalic,
+           className: "fa fa-italic",
+           title: "Italic (Ctrl+I)",
+         },
+         {
+           name: "strikethrough",
+           action: SimpleMDE.toggleStrikethrough,
+           className: "fa fa-strikethrough",
+           title: "Italic",
+         },
+         {
+           name: "heading",
+           action: SimpleMDE.toggleHeadingSmaller,
+           className: "fa fa-heading",
+           title: "Heading",
+         },
+         {
+           name: "horizontal-rule",
+           action: SimpleMDE.drawHorizontalRule,
+           className: "fa fa-minus",
+           title: "Insert Horizontal Line",
+         },
+         "|",
+         {
+           name: "quote",
+           action: SimpleMDE.toggleBlockquote,
+           className: "fa fa-quote-left",
+           title: "Quote",
+         },
+         {
+           name: "unordered-list",
+           action: SimpleMDE.toggleUnorderedList,
+           className: "fa fa-list-ul",
+           title: "Generic List",
+         },
+         {
+           name: "ordered-list",
+           action: SimpleMDE.toggleOrderedList,
+           className: "fa fa-list-ol",
+           title: "Numbered List",
+         },
+         "|",
+         {
+           name: "link",
+           action: SimpleMDE.drawLink,
+           className: "fa fa-link",
+           title: "Create Link",
+         },
+         {
+           name: "image",
+           action: SimpleMDE.drawImage,
+           className: "fa fa-image",
+           title: "Insert Image",
+         },
+         "|",
+         {
+           name: "preview",
+           action: function myTogglePreview(editor) {
+                     SimpleMDE.togglePreview(editor);
+                     pdf_new_window();
+                     external_new_window();
+                   },
+           className: "fa fa-eye no-disable no-mobile",
+           title: "Toggle Preview",
+         },
+         "|",
+         {
+           name: "download",
+           action: function download(editor) {
+                     var data = editor.value();
+                     var filename = "notes.txt";
+                     var type = "txt";
+                     var file = new Blob([data], {type: type});
+                     if (window.navigator.msSaveOrOpenBlob) // IE10+
+                       window.navigator.msSaveOrOpenBlob(file, filename);
+                     else { // Others
+                       var a = document.createElement("a"),
+                               url = URL.createObjectURL(file);
+                       a.href = url;
+                       a.download = filename;
+                       document.body.appendChild(a);
+                       a.click();
+                       setTimeout(function() {
+                         document.body.removeChild(a);
+                         window.URL.revokeObjectURL(url);
+                       }, 0);
+                     }
+                   },
+           className: "fa fa-download no-disable",
+           title: "Download Notes",
+         },
+         {
+           name: "guide",
+           action: function openInNewTab(editor) {
+             document.getElementById("helpMarkDown").classList.toggle("hiddenClass");
+             //var url = "https://simplemde.com/markdown-guide";
+             //var win = window.open(url, '_blank');
+             //win.focus();
+             },
+           className: "fa fa-question-circle no-disable",
+           title: "Markdown Guide",
+         }
+        ],
+	element: document.getElementById("textarea1")});
+        if (!simplemde.isPreviewActive())
+          simplemde.togglePreview();
+    </script>
+    <!--
+    <div cols="35" rows="1" 
+         style="position:absolute;
+                top:70pt;
+                left:63vw;
+                resize:none;
+                background-color:rgba(250,250,250,0);border:none;">
+        <a href="PortableLaTeX2MathML/LaTeXtoMathML.html" 
+           style="text-decoration: none;">$\LaTeX$ to MathML</a>
+    </div>
+    <textarea id="MathInput" cols="35" rows="5" 
+              oninput="UpdateMath(this.value)" 
+              style="position:absolute;
+                     top:90pt;
+                     left:63vw;
+                     resize:none;
+                     background-color:rgba(250,250,250,1);
+                     border:none;"></textarea>
+    <div id="MathOutput" style="position:absolute;top:200pt;left:63vw;">$${}$$</div>
+    -->
+  <!--Todo div-->
+  <div style="height:90vh;
+              position:absolute;
+              top:3vh;
+              left:60vw;
+              width:35vw;">
+    <div id="app"></div>
+    <!-- CSS Styles are 100% optional. but they make it look *much* nicer -->
+    <link rel="stylesheet" href="./assets/css/todomvc-common-base.css">
+    <link rel="stylesheet" href="./assets/css/todomvc-app.css">
+    <script src="./assets/script/todoscripts/elmish.js"></script>
+    <script src="./assets/script/todoscripts/todo-app.js"></script>
+    <script>
+      var model = {
+        todos: [
+          // { id: 0, title: "Make something people want.", done: false },
+          // { id: 1, title: "Bootstrap for as long as you can", done: false },
+          // { id: 2, title: "Let's solve our own problem", done: false }
+        ],
+        hash: '/#/', // the "route" to display
+        // editing: 2 // edit the 3rd todo list item (which has id == 2)
+      };
+      mount(model, update, view, 'app', subscriptions);
+    </script>
+  
+    <!-- Below this point is all related to the Tests for the App -->
+    <div id="test-app"></div> <!-- Create a test-app div to mount the app -->
+  </div>
+  </body>
+</html>
